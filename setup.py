@@ -6,7 +6,6 @@ import os
 import sys
 import re
 
-here = os.path.abspath(os.path.dirname(__file__))
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
@@ -23,7 +22,7 @@ setup(
     include_package_data=True,
     license = 'GNU General Public License v3.0',
     zip_safe=False,
-    install_requires=find_packages(),
+    install_requires=find_packages(exclude=["tests/"]),
     classifiers = [
         "Development Status :: 2 - Pre-Alpha",
         "Topic :: Utilities",
