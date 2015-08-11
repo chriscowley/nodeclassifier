@@ -1,5 +1,7 @@
 # Node Classifier
 
+[![Build Status](https://travis-ci.org/chriscowley/nodeclassifier.svg)](https://travis-ci.org/chriscowley/nodeclassifier)
+
 App and REST API for classification of Nodes for use in Puppet. Enables the
 assignment of Roles and Profiles to nodes based on attributes other than
 hostname.
