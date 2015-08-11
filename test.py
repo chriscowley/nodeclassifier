@@ -15,5 +15,9 @@ class NodeclassifierTestCase(unittest.TestCase):
         res = self.app.get("/")
         assert res.status_code == 200
 
+    def test_getrole(self):
+        res = self.app.get("/v1.0/getrole/")
+        assert res.status_code == 200
+
 if __name__ == '__main__':
     unittest.main()
