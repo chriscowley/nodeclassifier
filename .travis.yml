@@ -6,6 +6,4 @@ install:
     - "pip install coverage"
     - "pip install coveralls"
 script:
-    - "coverage run --source=nodeclassifer setup.py"
-after_success:
-    coveralls
+    - "python test.py"
