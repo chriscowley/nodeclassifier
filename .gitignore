@@ -2,3 +2,5 @@
 .eggs/
 .tox/
 nodeclassifier.egg-info/
+.travis-solo/
+.coverage
