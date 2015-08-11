@@ -12,9 +12,10 @@ class Root(Resource):
         """ Returna list of endpoints """
         return jsonify({
             '/v1.0/': 'API root endpoint',
+            '/v1.0/role': 'API root endpoint',
             })
 
-class GetRole(Resource):
+class Role(Resource):
     def  get(self):
         """ Return the role assigned to a node """
         return jsonify({
@@ -22,7 +23,7 @@ class GetRole(Resource):
             })
 
 api.add_resource(Root, '/v1.0/')
-api.add_resource(GetRole, '/v1.0/getrole')
+api.add_resource(Role, '/v1.0/role')
 
 @app.route('/')
 def index():
