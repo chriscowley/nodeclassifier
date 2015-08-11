@@ -14,7 +14,15 @@ class Root(Resource):
             '/v1.0/': 'API root endpoint',
             })
 
+class GetRole(Resource):
+    def  get(self):
+        """ Return the role assigned to a node """
+        return jsonify({
+            'role': 'default'
+            })
+
 api.add_resource(Root, '/v1.0/')
+api.add_resource(GetRole, '/v1.0/getrole')
 
 @app.route('/')
 def index():
