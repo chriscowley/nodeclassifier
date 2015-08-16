@@ -7,6 +7,7 @@ import os
 
 api = Api(app)
 
+
 class Root(Resource):
     def get(self):
         """ Returna list of endpoints """
@@ -17,12 +18,14 @@ class Root(Resource):
             '/v1.0/nodes': 'API root endpoint',
             })
 
+
 class Roles(Resource):
-    def  get(self):
+    def get(self):
         """ Return the role assigned to a node """
         return jsonify({
             'role': 'default'
             })
+
 
 class Rules(Resource):
     def get(self):
@@ -31,6 +34,7 @@ class Rules(Resource):
             'rule': 'rule 1',
             'rule': 'rule 2'
             })
+
 
 class Nodes(Resource):
     def __init__(self):
@@ -41,12 +45,14 @@ class Nodes(Resource):
         self.reqparse.add_argument('productname', type=str, required=False,
                                    help='Model Name',
                                    location='json')
+
     def get(self):
         """ Return a list of know nodes """
         return jsonify({
             'node1': 'nodedata',
             'node2': 'nodedata',
             })
+
     def put(self):
         """ Add a node and its data to the system """
 
