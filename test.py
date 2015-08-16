@@ -15,8 +15,16 @@ class NodeclassifierTestCase(unittest.TestCase):
         res = self.app.get("/")
         assert res.status_code == 200
 
-    def test_getrole(self):
-        res = self.app.get("/v1.0/role")
+    def test_getroles(self):
+        res = self.app.get("/v1.0/roles")
+        assert res.status_code == 200
+
+    def test_getrules(self):
+        res = self.app.get("/v1.0/rules")
+        assert res.status_code == 200
+
+    def test_getnodes(self):
+        res = self.app.get("/v1.0/nodes")
         assert res.status_code == 200
 
 if __name__ == '__main__':
