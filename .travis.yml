@@ -2,8 +2,8 @@ language: python
 python:
     - "2.7"
 install:
-    - "pip install -r requirements_test.txt"
-    - "pip install coverage"
-    - "pip install coveralls"
+    - "pip -q install -r requirements_test.txt"
+    - "pip -q install coverage"
+    - "pip -q install coveralls"
 script:
     - "python test.py"

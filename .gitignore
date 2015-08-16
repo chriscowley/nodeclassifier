@@ -5,3 +5,6 @@ nodeclassifier.egg-info/
 .travis-solo/
 .coverage
 .*swp
+README.rst
+data/*
+dist/

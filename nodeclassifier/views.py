@@ -3,6 +3,9 @@ from nodeclassifier import app
 from flask import request, jsonify
 from flask.ext.restful import Api, Resource, reqparse, fields, marshal
 import os
+from uuid import uuid4
+import json
+import io
 
 
 api = Api(app)
@@ -39,12 +42,13 @@ class Rules(Resource):
 class Nodes(Resource):
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
-        self.reqparse.add_argument('manuafactuer', type=str, required=False,
+        self.reqparse.add_argument('manufacturer', type=str, required=False,
                                    help='System Manufacter',
                                    location='json')
         self.reqparse.add_argument('productname', type=str, required=False,
                                    help='Model Name',
                                    location='json')
+        super(Nodes, self).__init__()
 
     def get(self):
         """ Return a list of know nodes """
@@ -55,11 +59,20 @@ class Nodes(Resource):
 
     def post(self):
         """ Add a node and its data to the system """
+        uuid = str(uuid4()).replace('-', '')[:32]
+        args = self.reqparse.parse_args()
+        manufacturer = args['manufacturer']
+        productname = args['productname']
+        nodefile = os.path.join(app.config['DATADIR'], uuid + '.json')
 
-        node
-        return jsonify({
-            'node': 'node_uuid',
-            })
+        nodedata = {
+                'uuid': uuid,
+                'manufacturer': args['manufacturer'],
+                'productname': args['productname']
+                }
+        with io.open(nodefile, 'w', encoding='utf-8') as outfile:
+            outfile.write(unicode(json.dumps(nodedata, ensure_ascii=False)))
+        return jsonify(nodedata)
 
 
 class Node(Resource):
@@ -72,8 +85,31 @@ class Node(Resource):
             })
 
 
+class Role(Resource):
+    def __init__(self):
+        self.reqparse = reqparse.RequestParser()
+        self.reqparse.add_argument('manufacturer', type=str, required=False,
+                                   help='System Manufacter',
+                                   location='json')
+        self.reqparse.add_argument('productname', type=str, required=False,
+                                   help='Model Name',
+                                   location='json')
+        super(Role, self).__init__()
+
+    def get(self):
+        """ Return a role based on parameters passes in the JSON """
+        args = self.reqparse.parse_args()
+        productname = args['productname']
+        if productname == 'XPS420':
+            role = 'desktop'
+        else:
+            role = 'default'
+        return {'role': role}, 200
+
+
 api.add_resource(Root, '/v1.0/')
 api.add_resource(Roles, '/v1.0/roles')
+api.add_resource(Role, '/v1.0/role')
 api.add_resource(Rules, '/v1.0/rules')
 api.add_resource(Nodes, '/v1.0/nodes')
 api.add_resource(Node, '/v1.0/nodes/<string:nodename>')
