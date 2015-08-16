@@ -35,6 +35,10 @@ class NodeclassifierTestCase(unittest.TestCase):
         res = self.app.get("/v1.0/nodes")
         assert res.status_code == 200
 
+    def test_getnode(self):
+        res = self.app.get("v1.0/nodes/node1")
+        assert res.status_code == 200
+
 
 if __name__ == '__main__':
     unittest.main()

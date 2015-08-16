@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from nodeclassifier import app
 from flask import request, jsonify
-from flask.ext.restful import Api, Resource, reqparse
+from flask.ext.restful import Api, Resource, reqparse, fields, marshal
 import os
 
 
@@ -53,7 +53,7 @@ class Nodes(Resource):
             'node2': 'nodedata',
             })
 
-    def put(self):
+    def post(self):
         """ Add a node and its data to the system """
 
         node
@@ -62,10 +62,21 @@ class Nodes(Resource):
             })
 
 
+class Node(Resource):
+    def get(self, nodename):
+        """ Detailed data about a node """
+        return jsonify({
+            'nodename': 'node1',
+            'manufacturer': 'Dell',
+            'productname': 'XPS-420',
+            })
+
+
 api.add_resource(Root, '/v1.0/')
 api.add_resource(Roles, '/v1.0/roles')
 api.add_resource(Rules, '/v1.0/rules')
 api.add_resource(Nodes, '/v1.0/nodes')
+api.add_resource(Node, '/v1.0/nodes/<string:nodename>')
 
 
 @app.route('/')
