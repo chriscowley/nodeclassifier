@@ -4,3 +4,4 @@
 nodeclassifier.egg-info/
 .travis-solo/
 .coverage
+.*swp
