@@ -1,19 +1,22 @@
 # -*- coding: utf-8 -*-
 from nodeclassifier import app
-from flask import request, jsonify
+from flask import request, jsonify, Blueprint, redirect, render_template
 from flask.ext.restful import Api, Resource, reqparse, fields, marshal
+from flask.views import MethodView
 import os
 from uuid import uuid4
 import json
 import io
+from nodeclassifier.models import Rule, Condition
 
+rules = Blueprint('rules', __name__)
 
 api = Api(app)
 
 
 class Root(Resource):
     def get(self):
-        """ Returna list of endpoints """
+        """ Return a list of endpoints """
         return jsonify({
             '/v1.0/': 'API root endpoint',
             '/v1.0/roles': 'API root endpoint',
@@ -31,12 +34,34 @@ class Roles(Resource):
 
 
 class Rules(Resource):
+    def __init__(self):
+        self.reqparse = reqparse.RequestParser()
+        self.reqparse.add_argument('role', type=str, required=False,
+                                   help='Role to the this rule which match',
+                                   location='json')
+        super(Rules, self).__init__()
+
     def get(self):
         """ Return a list of rules"""
-        return jsonify({
-            'rule': 'rule 1',
-            'rule': 'rule 2'
-            })
+        novarule = {'productname': 'Microserver'}
+        storagerule = {'product': 'Atomboard'}
+#        rules = Rules.objects.all()
+        rules = {
+                'novanode': novarule,
+                'storage': storagerule
+                }
+        return rules
+
+    def post(self):
+        """ Add a new rule """
+        uuid = str(uuid4()).replace('-', '')[:32]
+        args = self.reqparse.parse_args()
+        role = args['role']
+        rule = {
+                'uuid': uuid,
+                'role': role,
+               }
+        return jsonify(rule)
 
 
 class Nodes(Resource):

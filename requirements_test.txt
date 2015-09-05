@@ -28,3 +28,4 @@ travis-solo==0.0.9
 virtualenv==13.1.0
 WTForms==2.0.2
 pep8==1.6.2
+flask-script==2.0.5

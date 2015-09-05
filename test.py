@@ -4,6 +4,7 @@ import os
 import nodeclassifier
 import unittest
 import pep8
+import json
 
 class NodeclassifierTestCase(unittest.TestCase):
     def test_pep8_conformance(self):
@@ -29,6 +30,22 @@ class NodeclassifierTestCase(unittest.TestCase):
 
     def test_getrules(self):
         res = self.app.get("/v1.0/rules")
+        assert res.status_code == 200
+
+    def test_postrules_content(self):
+        testrole = {
+                'role' : 'testrole'
+                }
+        res = self.app.post(
+                "/v1.0/rules",
+                data=json.dumps(testrole),
+                content_type='application/json'
+                )
+        content = "testrole"
+        assert content in res.data
+        
+    def test_postrules(self):
+        res = self.app.post("/v1.0/rules")
         assert res.status_code == 200
 
     def test_getnodes(self):
