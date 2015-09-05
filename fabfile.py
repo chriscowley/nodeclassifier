@@ -7,4 +7,4 @@ def test():
     local('python test.py')
 
 def serve():
-    local('python runserver.py')
+    local('python manage.py runserver')
